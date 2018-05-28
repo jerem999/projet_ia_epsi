@@ -2,36 +2,47 @@
 import skeleton from './skeleton.js';
 import {simulate} from './simulator/walkSimulator.js';
 import {runEa} from './ea.js';
+import {generatePopulation} from './raiseAnimalFunction.js';
 
 export default function trainingAnimal(criteria) {
 
+
+
+/* *************** Etape initial : definition des parametres necessaire au lancement de l'algorithme ********* */
+
+    // variable necessaire à au lancement de l'algorithme
     const mutationRate = criteria.mutationRate;
     const creatureType = criteria.creatureType;
     const populationSize = criteria.populationSize;
     const crossoverRate = criteria.crossoverRate;
 
 
-    // Le nombre de gene correspond au nombre de arrete
+    // Le nombre de gene correspond au nombre de arrete de l'animal.
     const numberOfGenes = skeleton[creatureType].edges.length;
 
+    
+ /* *************** Etape 1 : La création de la population initiale   ********* */  
 
-    // on genere la population avec un patrimoine genetique distinct  
-    function generatePopulation() { 
+    //on genere  aleatoirement une population de pré-defini avec un patrimoine genetique aleatoire   
+    function createPopulation() { 
         const population = [];
         // on parcourt la taille de la population et à chaque ind , on lui affecte un patrimoine genetique aleatoirement.
         // chaque numero du gene appartient à un muscle (un edge dans notre cas)
         for (let i = 0; i < populationSize; i++) {
-            const genes = [];
+            const geneticPatrimony = [];
             
             for (let j = 0; j < numberOfGenes; j++) {
-                
-                
-                genes.push(Math.random());
+                       
+                geneticPatrimony.push(Math.random());
             }
-            population.push(genes);
+            population.push(geneticPatrimony);
         }
         return population;
     }
+
+
+    
+    
 
 
     // fonction qui permet d'evaluer les individu en fonction de la distance parcouru. ici on recupere sous forme de tableai les distances
@@ -148,7 +159,7 @@ export default function trainingAnimal(criteria) {
     }
 
     runEa({
-        generatePopulation: generatePopulation,
+        createPopulation: createPopulation,
         fitness: fitnessFunction,
         adultSelection: adultSelectionFunction,
         parentSelection: parentSelectionFunction,

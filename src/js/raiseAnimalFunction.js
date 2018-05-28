@@ -16,7 +16,7 @@ export default function raiseAnimalFunction(criteria) {
 
 
     // on genere la population avec un patrimoine genetique distinct  
-    export function generatePopulation() { 
+    function generatePopulation() { 
         const population = [];
         // on parcourt la taille de la population et à chaque ind , on lui affecte un patrimoine genetique aleatoirement.
         // chaque numero du gene appartient à un muscle (un edge dans notre cas)
