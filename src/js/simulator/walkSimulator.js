@@ -1,7 +1,7 @@
 import {World, Vec2, Edge} from 'planck-js';
 import Creature from './creature.js';
 
-const nrGrounds = 5;
+const nrGrounds = 1;
 const groundsDistance = 2.5;
 const simulationTime = 15; // seconds
 let finished = false;
