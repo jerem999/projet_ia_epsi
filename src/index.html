@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Walking EA - Evolve</title>
+    <title>Learn to walk</title>
     <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
 
-<h1>Apprendre à marcher</h1>
-
+<h1>Learn to walk</h1>
 
 <div class="container">
 
@@ -31,25 +30,25 @@
         <div>
             <label for="figure">Figure</label>
             <select id="figure">
-                <option>QuatrePieds</option>
-                <option>SixPieds</option>
-                <option>HuitPieds</option>
+                <option>FourFeet</option>
+                <option>SixFeet</option>
+                <option>EightFeet</option>
             </select>
         </div>
 
-        <div class="slider">
+        <div class="slider" style="display:none">
             <label for="mutationslider">Mutation</label>
             <input id="mutationslider" type="range" min="0" max="1" step=".05" value=".6"/>
             <input id="mutationslidervalue" type="text" value=".6" readonly/>
         </div>
 
-        <div class="slider">
-            <label for="crossoverslider">Crossover</label>
+        <div class="slider" style="display:none">
+            <label for="crossoverslider" >Crossover</label>
             <input id="crossoverslider" type="range" min="0" max="1" step=".05" value=".5"/>
             <input id="crossoverslidervalue" type="text" value=".5" readonly/>
         </div>
 
-        <div class="slider">
+        <div class="slider" style="display:none">
             <label for="populationslider">Population size</label>
             <input id="populationslider" type="range" min="2" max="100" step="2" value="20"/>
             <input id="populationslidervalue" type="text" value="20" readonly/>
@@ -63,7 +62,6 @@
     </div>
 </div>
 
-
-<script src="/bundle.js"></script>
+<script src="/bundle.js"></script> 
 </body>
 </html>

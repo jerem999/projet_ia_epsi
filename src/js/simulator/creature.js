@@ -5,11 +5,7 @@ import defs from './creatureDefinitions.js';
 
 export default class Creature {
 
-    constructor(creatureType, movements, world, color, offset) {
-
-        
-        
-        
+    constructor(creatureType, movements, world, color, offset) { 
         const definition = defs[creatureType];
 
         this.color = color;
@@ -107,7 +103,10 @@ export default class Creature {
         this.bodies.forEach(b => {
             const c = this.color;
 
-           
+            console.log("je suis le color ");
+            console.log(c);
+            
+            
             ctx.fillStyle = `rgba(${c.r}, ${c.g}, ${c.b}, 0.8)`;
 
             const p = b.getPosition();
