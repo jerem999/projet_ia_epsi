@@ -5,8 +5,12 @@ import defs from './creatureDefinitions.js';
 
 export default class Creature {
 
-    constructor(d, movements, world, color, offset) {
-        const definition = defs[d];
+    constructor(creatureType, movements, world, color, offset) {
+
+        
+        
+        
+        const definition = defs[creatureType];
 
         this.color = color;
         this.offset = offset;
@@ -19,14 +23,15 @@ export default class Creature {
 
 
         const shape = Circle(.1);
-
+    
         for (let i = 0; i < definition.points.length; i++) {
             const p = definition.points[i];
             const bodyDef = {
                 type: 'dynamic',
                 position: Vec2(p[0], p[1]),
                 linearDamping: .8,
-                angularDamping: .5,
+                //angularDamping: .5,
+                angularDamping: .2,
                 fixedRotation: true
             };
 
@@ -45,7 +50,7 @@ export default class Creature {
 
         const jointDef = {
             frequencyHz: 10.,
-            dampingRatio: 8.8
+            dampingRatio: 15.8
         };
 
         for (let i = 0; i < definition.edges.length; i++) {
@@ -101,6 +106,11 @@ export default class Creature {
     render(ctx) {
         this.bodies.forEach(b => {
             const c = this.color;
+
+            console.log("je suis le color ");
+            console.log(c);
+            
+            
             ctx.fillStyle = `rgba(${c.r}, ${c.g}, ${c.b}, 0.8)`;
 
             const p = b.getPosition();
