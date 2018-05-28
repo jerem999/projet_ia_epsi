@@ -142,13 +142,14 @@ class Simulation {
 
     render() {
         const camera = this.camera;
+        console.log(canvas.height / 20 + (camera.pos.y * camera.zoom))
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillText(this.timePassed.toFixed(1), 100, 10);
 
         ctx.save();
 
         ctx.translate(canvas.width / 2 - (camera.pos.x * camera.zoom),
-            canvas.height / 2 + (camera.pos.y * camera.zoom));
+            canvas.height / 10 + (camera.pos.y * camera.zoom));
         ctx.scale(camera.zoom, -camera.zoom);
 
         this.renderGrounds();

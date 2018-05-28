@@ -103,8 +103,8 @@ export default class Creature {
         this.bodies.forEach(b => {
             const c = this.color;
 
-            console.log("je suis le color ");
-            console.log(c);
+            //console.log("je suis le color ");
+            //console.log(c);
             
             
             ctx.fillStyle = `rgba(${c.r}, ${c.g}, ${c.b}, 0.8)`;

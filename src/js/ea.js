@@ -12,7 +12,7 @@ export function runEa({generatePopulation, fitness, adultSelection, parentSelect
 
         while(true) {
             const fitnesses = await fitness(population);
-            console.log(fitnesses);
+            //console.log(fitnesses);
             debugInfo(fitnesses);
 
             const parents = parentSelection(population, fitnesses);
