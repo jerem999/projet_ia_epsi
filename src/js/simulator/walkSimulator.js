@@ -119,14 +119,7 @@ class Simulation {
             
         });
 
-        
-        
-
-        
-
-        
-        
-        
+   
         this.timePassed = 0;
 
     }
@@ -150,7 +143,7 @@ class Simulation {
     render() {
         const camera = this.camera;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillText(this.timePassed.toFixed(1), 10, 10);
+        ctx.fillText(this.timePassed.toFixed(1), 100, 10);
 
         ctx.save();
 
@@ -228,7 +221,7 @@ class Simulation {
     createGround() {
 
         this.ground = this.world.createBody();
-        this.ground.createFixture(Edge(Vec2(-40.0, 0), Vec2(100.0, 0)),
+        this.ground.createFixture(Edge(Vec2(-400.0, 0), Vec2(100.0, 0)),
             {density: 0, friction: 1.5});
  
 
