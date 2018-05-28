@@ -1,10 +1,10 @@
-//import creatureDefinitions from './simulator/creatureDefinitions.js';
 import skeleton from './skeleton.js';
 import {simulate} from './simulator/walkSimulator.js';
 import {runEa} from './ea.js';
 
-export default function trainingAnimal(criteria) {
+export default function raiseAnimalFunction(criteria) {
 
+    // les criteres à apprendre en compte lors du lancement de la simulation
     const mutationRate = criteria.mutationRate;
     const creatureType = criteria.creatureType;
     const populationSize = criteria.populationSize;
@@ -16,7 +16,7 @@ export default function trainingAnimal(criteria) {
 
 
     // on genere la population avec un patrimoine genetique distinct  
-    function generatePopulation() { 
+    export function generatePopulation() { 
         const population = [];
         // on parcourt la taille de la population et à chaque ind , on lui affecte un patrimoine genetique aleatoirement.
         // chaque numero du gene appartient à un muscle (un edge dans notre cas)
@@ -147,14 +147,7 @@ export default function trainingAnimal(criteria) {
         }
     }
 
-    runEa({
-        generatePopulation: generatePopulation,
-        fitness: fitnessFunction,
-        adultSelection: adultSelectionFunction,
-        parentSelection: parentSelectionFunction,
-        mutate: mutateFunction,
-        crossover: crossoverFunction
-    });
+
 
 
     function gauss() {

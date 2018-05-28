@@ -1,7 +1,7 @@
 
 
 const definitions = {
-    QuatrePieds: 
+    FourFeet: 
     {
         points: [
             [0, 0],
@@ -71,7 +71,7 @@ const definitions = {
     //     ]
     // }
     ,
-    HuitPieds: {
+    EightFeet: {
         points: [
             [0, 0],
             [0, 1],
@@ -138,7 +138,7 @@ const definitions = {
                  
         ]
     },
-    SixPieds:  {
+    SixFeet:  {
         points: [
             [0, 0],
             [0, 1],
@@ -194,12 +194,6 @@ const definitions = {
             
 
 
-             
-
-
-
-
-            
             
         ]
     }
