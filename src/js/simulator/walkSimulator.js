@@ -3,7 +3,7 @@ import Creature from './creature.js';
 
 const nrGrounds = 5;
 const groundsDistance = 2.5;
-const simulationTime = 60; // seconds
+const simulationTime = 15; // seconds
 let finished = false;
 
 const simFreq = 1 / 60;
@@ -22,6 +22,7 @@ export function simulate(creatureType, phenotypes) {
     finished = false;
     simulation = new Simulation(creatureType, phenotypes);
 
+   
 
     startSimulation();
     startRendering();
@@ -61,6 +62,7 @@ function startRendering() {
 }
 
 function finishSimulation() {
+    
     endSimulation();
 
     const result = simulation.creatures.map(c => {
@@ -76,6 +78,8 @@ export function endSimulation() {
     clearTimeout(simulationTimeout);
     clearInterval(renderInterval);
 
+
+    
     if (simulation) {
         simulation.timeout = simulationTime + 1;
     }
@@ -86,19 +90,43 @@ export function endSimulation() {
 class Simulation {
 
     constructor(creatureType, phenotypes) {
+        // position des creatures au depart de la simulation
         this.camera = {
-            pos: Vec2(5, 5.5),
+            pos: Vec2(7, 5.5),
             zoom: 45,
         };
-
+        
+        // creation du monde avec prise en compte de la gravite terrestre
         this.world = new World(Vec2(0, -10));
         this.createGround();
 
 
+        
+
         this.creatures = phenotypes.map((p, i) => {
+
             const offsett = (i % nrGrounds) * groundsDistance;
+
+            //console.log("je suis le offset");
+            //console.log(offsett);
+            
+            
+
+            
             return new Creature(creatureType, p, this.world, getRandomColor(), offsett);
+            
+            
+            
         });
+
+        
+        
+
+        
+
+        
+        
+        
         this.timePassed = 0;
 
     }
@@ -198,14 +226,17 @@ class Simulation {
 
 
     createGround() {
+
         this.ground = this.world.createBody();
         this.ground.createFixture(Edge(Vec2(-40.0, 0), Vec2(100.0, 0)),
             {density: 0, friction: 1.5});
+ 
 
     }
 
 }
 
+// couleur des points des creatures 
 function getRandomColor() {
     return {
         r: Math.floor(Math.random() * 255),

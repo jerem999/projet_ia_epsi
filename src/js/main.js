@@ -3,16 +3,21 @@ import {simulate, setSimulationIterations, setCameraX, endSimulation} from './si
 import evolveWalkers from './walkerEaRunner.js';
 
 function startSimulation() {
-    endSimulation();
+    //endSimulation();
     const options = {
-        mutationRate: parseFloat(document.getElementById('mutationslider').value),
-        crossoverRate: parseFloat(document.getElementById('crossoverslider').value),
+        // mutationRate: parseFloat(document.getElementById('mutationslider').value),
+        // crossoverRate: parseFloat(document.getElementById('crossoverslider').value),
+        // creatureType: document.getElementById('figure').value,
+        // populationSize: document.getElementById('populationslider').value
+
+        mutationRate: 0.6,
+        crossoverRate: 0.5,
         creatureType: document.getElementById('figure').value,
-        populationSize: document.getElementById('populationslider').value
+        populationSize: 2
     };
 
 
-    console.log(options);
+    
 
     evolveWalkers(options);
 

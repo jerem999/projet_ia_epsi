@@ -4,6 +4,7 @@ let currentGeneration = 1;
 export function runEa({generatePopulation, fitness, adultSelection, parentSelection, crossover, mutate}) {
 
     currentGeneration = 1;
+    
     debugInfo([0]);
     let population = generatePopulation();
 
