@@ -1,7 +1,7 @@
 let currentGeneration = 1;
 
 
-export function runEa({createPopulation, fitness, adultSelection, parentSelection, crossover, mutate}) {
+export function runArtificialIntelligence({createPopulation, fitness, adultSelection, parentSelection, crossover, mutate}) {
 
     currentGeneration = 1;
     
