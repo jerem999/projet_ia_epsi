@@ -4,12 +4,11 @@ import animal from './animal';
 const soil = 1;
 const soilDistance = 2.5;
 
-//duree de l'iteration
+//temps d'extension de l'iteration
 const chrono = 15; // seconds
+let terminated = false;
 
-let finished = false;
-
-const simFreq = 1 / 60;
+const simulationFrequence = 1 / 60;
 let simulationIterations = 2;
 let simulationTimeout = null;
 let renderInterval = null;
@@ -18,17 +17,18 @@ let simulation = null;
 let promiseResolve = null;
 
 
-const canvas = document.getElementById('mainCanvas');
-const ctx = canvas.getContext('2d');
+const canvas = document.getElementById('homePageCanvas');
+const context = canvas.getContext('2d');
 
-export function simulate(creatureType, phenotypes) {
-    finished = false;
-    simulation = new Simulation(creatureType, phenotypes);
+export function simulate(creatureType, geneticPatrimony) {
 
-   
 
-    startSimulation();
-    startRendering();
+    terminated = false;
+    simulation = new generateEnvironement(creatureType, geneticPatrimony);
+
+
+    launchSimulation();
+    launchRendering();
 
     return new Promise(resolve => promiseResolve = resolve);
 }
@@ -41,7 +41,7 @@ export function setCameraX(x) {
     simulation.camera.pos.x = x;
 }
 
-function startSimulation() {
+function launchSimulation() {
     for (let i = 0; i < simulationIterations; i++) {
         simulation.update();
     }
@@ -49,19 +49,19 @@ function startSimulation() {
     if (simulation.isFinished()) {
         finishSimulation();
     } else {
-        let timeout = 1000 * simFreq;
+        let timeout = 1000 * simulationFrequence;
         if (simulationIterations > 15) {
             timeout = 1; // to not have 1/60 timeout when trying to speed up very fast
         }
 
-        simulationTimeout = setTimeout(startSimulation, timeout);
+        simulationTimeout = setTimeout(launchSimulation, timeout);
     }
 }
 
-function startRendering() {
+function launchRendering() {
     renderInterval = setInterval(() => {
         simulation.render();
-    }, 1000 * simFreq);
+    }, 1000 * simulationFrequence);
 }
 
 function finishSimulation() {
@@ -90,7 +90,7 @@ export function endSimulation() {
 }
 
 
-class Simulation {
+class generateEnvironement {
 
     constructor(creatureType, phenotypes) {
         // position des creatures au depart de la simulation
@@ -129,14 +129,14 @@ class Simulation {
 
 
     update() {
-        this.timePassed += simFreq;
+        this.timePassed += simulationFrequence;
 
         if (this.isFinished()) {
             return;
         }
 
         this.creatures.forEach(c => c.update(this.timePassed));
-        this.world.step(simFreq);
+        this.world.step(simulationFrequence);
     }
 
     isFinished() {
@@ -145,32 +145,33 @@ class Simulation {
 
     render() {
         const camera = this.camera;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillText(this.timePassed.toFixed(1), 100, 10);
+        //console.log(canvas.height / 20 + (camera.pos.y * camera.zoom))
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.fillText(this.timePassed.toFixed(1), 100, 10);
 
-        ctx.save();
+        context.save();
 
-        ctx.translate(canvas.width / 2 - (camera.pos.x * camera.zoom),
-            canvas.height / 2 + (camera.pos.y * camera.zoom));
-        ctx.scale(camera.zoom, -camera.zoom);
+        context.translate(canvas.width / 2 - (camera.pos.x * camera.zoom),
+            canvas.height / 10 + (camera.pos.y * camera.zoom));
+        context.scale(camera.zoom, -camera.zoom);
 
         this.renderGrounds();
         this.renderMaxLine();
 
-        this.creatures.forEach(c => c.render(ctx));
+        this.creatures.forEach(c => c.render(context));
 
 
-        ctx.restore();
+        context.restore();
     }
 
     renderGrounds() {
         for (let i = 0; i < soil; i++) {
-            ctx.beginPath();
-            ctx.lineWidth = .01;
+            context.beginPath();
+            context.lineWidth = .01;
 
-            ctx.moveTo(-40, i * soilDistance);
-            ctx.lineTo(100, i * soilDistance);
-            ctx.stroke();
+            context.moveTo(-40, i * soilDistance);
+            context.lineTo(100, i * soilDistance);
+            context.stroke();
         }
     }
 
@@ -193,31 +194,31 @@ class Simulation {
             this.camera.pos.x = max - 3;
         }
 
-        ctx.beginPath();
-        ctx.lineWidth = .005;
-        ctx.moveTo(0, -5);
-        ctx.lineTo(0, 17);
-        ctx.stroke();
+        context.beginPath();
+        context.lineWidth = .005;
+        context.moveTo(0, -5);
+        context.lineTo(0, 17);
+        context.stroke();
 
-        ctx.save();
-        ctx.font = '0.3px serif';
-        ctx.scale(1, -1);
-        ctx.fillText(max.toFixed(2), max+0.1, 1);
-        ctx.fillText(currMax.toFixed(2), currMax-.8, 1);
+        context.save();
+        context.font = '0.3px serif';
+        context.scale(1, -1);
+        context.fillText(max.toFixed(2), max+0.1, 1);
+        context.fillText(currMax.toFixed(2), currMax-.8, 1);
 
-        ctx.restore();
+        context.restore();
 
-        ctx.beginPath();
-        ctx.lineWidth = .01;
-        ctx.moveTo(max, -5);
-        ctx.lineTo(max, 17);
-        ctx.stroke();
+        context.beginPath();
+        context.lineWidth = .01;
+        context.moveTo(max, -5);
+        context.lineTo(max, 17);
+        context.stroke();
 
-        ctx.beginPath();
-        ctx.lineWidth = .005;
-        ctx.moveTo(currMax, -5);
-        ctx.lineTo(currMax, 17);
-        ctx.stroke();
+        context.beginPath();
+        context.lineWidth = .005;
+        context.moveTo(currMax, -5);
+        context.lineTo(currMax, 17);
+        context.stroke();
     }
 
 

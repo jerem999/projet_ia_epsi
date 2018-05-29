@@ -1,5 +1,6 @@
 import css from '../css/styles.css';
-import {simulate, setSimulationIterations, setCameraX, endSimulation} from './simulator/walkSimulator.js';
+//import {simulate, setSimulationIterations, setCameraX, endSimulation} from './simulator/walkSimulator.js';
+import {simulate, setSimulationIterations, setCameraX, endSimulation} from './walkingEnvironment.js';
 //import evolveWalkers from './walkerEaRunner.js';
 import {startSimulation} from './launchSimulation.js';
 

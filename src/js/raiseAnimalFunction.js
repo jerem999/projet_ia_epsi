@@ -1,5 +1,6 @@
 import skeleton from './skeleton.js';
 import {simulate} from './simulator/walkSimulator.js';
+import {simulate} from './walkingEnvironment';
 import {runEa} from './ea.js';
 
 
