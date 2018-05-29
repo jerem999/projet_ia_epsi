@@ -12,16 +12,7 @@
 
     <div class="canvas">
         <canvas id="mainCanvas" width="800" height="350"></canvas>
-
-        <div class="slider inline">
-            <label for="speedslider">Speed</label>
-            <input id="speedslider" type="range" min="1" max="50" step="1" value="2"/>
-            <input id="speedslidervalue" type="text" value="2" readonly/>
-        </div>
-        <div id="debugInfo">
-
-        </div>
-       
+        <div id="debugInfo"> </div>
     </div>
 
     <div class="controls">
@@ -53,12 +44,14 @@
             <input id="populationslider" type="range" min="2" max="100" step="2" value="20"/>
             <input id="populationslidervalue" type="text" value="20" readonly/>
         </div>
-
-
         <div height="10">
             <button id="start">Start evolution</button>
         </div>
-
+        <div class="slider inline">
+            <label for="speedslider">Speed</label>
+            <input id="speedslider" type="range" min="1" max="50" step="1" value="2"/>
+            <input id="speedslidervalue" type="text" value="2" readonly/>
+        </div>
     </div>
 </div>
 
