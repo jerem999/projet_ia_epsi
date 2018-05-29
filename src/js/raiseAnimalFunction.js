@@ -2,6 +2,9 @@ import skeleton from './skeleton.js';
 import {simulate} from './simulator/walkSimulator.js';
 import {runEa} from './ea.js';
 
+
+
+
 export default function raiseAnimalFunction(criteria) {
 
     // les criteres à apprendre en compte lors du lancement de la simulation

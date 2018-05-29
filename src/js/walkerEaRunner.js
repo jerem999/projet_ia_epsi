@@ -35,9 +35,7 @@ export default function evolveWalkers(options) {
     // fonction qui permet d'evaluer les individu en fonction de la distance parcouru. ici on recupere sous forme de tableai les distances
     // a laquelle ce sont arreté  les creatures à la fin de l'iteration
     async function fitnessFunction(phenotypes) {
-
-        
-        
+  
         const results = await simulate(creatureType, phenotypes)
 
         // convert results to fitness values

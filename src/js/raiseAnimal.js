@@ -1,8 +1,9 @@
 //import creatureDefinitions from './simulator/creatureDefinitions.js';
 import skeleton from './skeleton.js';
-import {simulate} from './simulator/walkSimulator.js';
+// import {simulate} from './simulator/walkSimulator.js';
 import {runEa} from './ea.js';
-import {generatePopulation} from './raiseAnimalFunction.js';
+import {fitness} from './raiseAnimalFunction.js';
+import {simulate} from './walkingEnvironment.js';
 
 export default function trainingAnimal(criteria) {
 
@@ -41,20 +42,23 @@ export default function trainingAnimal(criteria) {
     }
 
 
-    
-    
+
+/* *************** Etape 2 : évaluation des individus   ********* */  
 
 
-    // fonction qui permet d'evaluer les individu en fonction de la distance parcouru. ici on recupere sous forme de tableai les distances
-    // a laquelle ce sont arreté  les creatures à la fin de l'iteration
-    async function fitnessFunction(phenotypes) {
+    // la fonction permet d'evaluer les individu en fonction de la distance parcouru. ici on recupere sous forme de tableau les distances 
+    // parcouru par chacun des membres de la population.
+    async function fitness(animals) {
 
-        
-        
-        const results = await simulate(creatureType, phenotypes)
+        //historique de marche des animaux. On recupere à la fois la distance max parcouru et la distance
+        // à laquelle il etait à la fin de l'iteration
+        const fitnessValue = await simulate(creatureType, animals)
 
-        // convert results to fitness values
-        return results.map(r => r.distance);
+        //On recupere les derniere distances ou s'est arreté des animaux à la fin de l'iteration
+        return fitnessValue.map(result => 
+            result.distance);
+
+       
         
     }
 
@@ -160,7 +164,7 @@ export default function trainingAnimal(criteria) {
 
     runEa({
         createPopulation: createPopulation,
-        fitness: fitnessFunction,
+        fitness: fitness,
         adultSelection: adultSelectionFunction,
         parentSelection: parentSelectionFunction,
         mutate: mutateFunction,
