@@ -1,6 +1,6 @@
 import {Vec2, DistanceJoint, Circle} from 'planck-js';
 
-import defs from './creatureDefinitions.js';
+import defs from './skeleton';
 
 
 export default class animal {

@@ -1,8 +1,8 @@
-//import creatureDefinitions from './simulator/creatureDefinitions.js';
+
 import skeleton from './skeleton.js';
-import {simulate} from './simulator/walkSimulator.js';
-import {runEa} from './ea.js';
-import {generatePopulation} from './raiseAnimalFunction.js';
+
+import {runArtificialIntelligence} from './artificalIntelligence.js';
+import {simulate} from './walkingEnvironment.js';
 
 export default function trainingAnimal(criteria) {
 
@@ -41,81 +41,70 @@ export default function trainingAnimal(criteria) {
     }
 
 
-    
-    
+
+/* *************** Etape 2 : évaluation des individus   ********* */  
 
 
-    // fonction qui permet d'evaluer les individu en fonction de la distance parcouru. ici on recupere sous forme de tableai les distances
-    // a laquelle ce sont arreté  les creatures à la fin de l'iteration
-    async function fitnessFunction(phenotypes) {
+    // la fonction permet d'evaluer les individu en fonction de la distance parcouru. ici on recupere sous forme de tableau les distances 
+    // parcouru par chacun des membres de la population.
+    async function fitness(animals) {
 
-        
-        
-        const results = await simulate(creatureType, phenotypes)
+        //historique de marche des animaux. On recupere à la fois la distance max parcouru et la distance
+        // à laquelle il etait à la fin de l'iteration
+        const fitnessValue = await simulate(creatureType, animals)
 
-        // convert results to fitness values
-        return results.map(r => r.distance);
+        //On recupere les derniere distances ou s'est arreté des animaux à la fin de l'iteration
+        return fitnessValue.map(result => 
+            result.distance);
+
+       
         
     }
 
 
-    //Cette méthode de sélection permet de mettre en avant les meilleurs individus de la population.
-    //Ce sont donc les individus les plus prometteurs qui vont participer à l'amélioration de notre population.
-    // Cette méthode a l'avantage de permettre une convergence (plus) rapide des solutions, mais au détriment de la diversité des individus. 
-    //On prend en effet le risque d'écarter des individus de piètre qualité, 
-    //mais qui aurait pu apporter de quoi créer de très bonnes solutions dans les générations suivantes.
-    function adultSelectionFunction(oldPopulation, oldFitnesses, children) {
-
-
-   
-
-        const sortedFitnesses = oldFitnesses.slice().sort((a, b) => a - b).reverse();
-
-        const bestIndex = oldFitnesses.indexOf(sortedFitnesses[0]);
-        const secondBestIndex = oldFitnesses.indexOf(sortedFitnesses[1]);
-
-        return children.concat([oldPopulation[secondBestIndex], oldPopulation[bestIndex]]);
-    }
 
 
     //sélection par tournoi 
     //Le principe de la sélection par tournoi augmente les chances pour les individus de piètre qualité de participer à l'amélioration de la population. 
     //Un tournoi consiste en une rencontre entre plusieurs individus pris au hasard dans la population. 
     //Le vainqueur du tournoi est l'individu de meilleure qualité.
-    function parentSelectionFunction(population, fitnesses) {
+    // Cette fonction compare deux fonctions fitnesse alatoirement. Si la fonction de fitness superieur à l'autre va faire 
+    // que l'on va selectionner le parent
+    function selectionOfParent(population, allFitnesses) {
 
         
         let parents = [];
 
         for (let i = 0; i < populationSize; i++) {
 
-            let index1 = Math.floor(Math.random() * population.length);
+            let indexA = Math.floor(Math.random() * population.length);
             
-            let index2 = Math.floor(Math.random() * population.length);
+            let indexB = Math.floor(Math.random() * population.length);
 
             
 
-            let f1 = fitnesses[index1];
-            let f2 = fitnesses[index2];
+            let f1 = allFitnesses[indexA];
+            let f2 = allFitnesses[indexB];
 
          
 
            
             if (f1 >= f2) {
-                parents.push(population[index1]);
+                parents.push(population[indexA]);
             } else {
-                parents.push(population[index2]);
+                parents.push(population[indexB]);
             }
 
         }
 
-        
-
         return parents;
 
-        //return population;
-        // make it select parents based on fitness
+       
     }
+
+
+
+/* *************** Etape 3 : création de nouveaux individus   ********* */  
 
     //Une autre solution que le croisement pour créer de nouveaux individus est de modifier ceux déjà existants. 
     //Une fois de plus, le hasard va nous être d'une grande utilité. 
@@ -124,7 +113,7 @@ export default function trainingAnimal(criteria) {
     //De même que pour les croisements, il n'est pas recommandé de faire muter tous les individus. 
     //Il est possible de faire muter un individu de la manière qu'il vous plaira. 
     //Une seule contrainte : l'individu muté doit être de la forme d'une solution potentielle.
-    function mutateFunction(individual) {
+    function mutation(individual) {
 
         if (Math.random() <= mutationRate) {
             const geneToMutate = Math.floor(Math.random() * individual.length);
@@ -135,11 +124,17 @@ export default function trainingAnimal(criteria) {
     }
 
 
+    function gauss() {
+        return (Math.random() + Math.random() + Math.random()
+         + Math.random() + Math.random() + Math.random() - 3) / 3;
+    }
+
+
 
     //On melange ADN de deux individux 
     //Les croisements permettent de simuler des reproductions d'individus dans le but d'en créer des nouveaux.
     // ici on fait des croisement aleatiore 
-    function crossoverFunction(parent1, parent2) {
+    function crossover(parent1, parent2) {
         //Premièrement, il faut savoir s'il faut mélanger ou non. 
         //Fait en générant un nombre aléatoire (entre 0 et 1) 
         //et en vérifiant s'il est inférieur à crossoverRate celui sélectionné.
@@ -158,18 +153,39 @@ export default function trainingAnimal(criteria) {
         }
     }
 
-    runEa({
+
+/* *************** Etape 4 :  L'insertion des nouveaux individus dans la population   ********* */  
+
+
+    //Cette méthode de sélection permet de mettre en avant les meilleurs individus de la population.
+    //Ce sont donc les individus les plus prometteurs qui vont participer à l'amélioration de notre population.
+    // Cette méthode a l'avantage de permettre une convergence (plus) rapide des solutions, mais au détriment de la diversité des individus. 
+    //On prend en effet le risque d'écarter des individus de piètre qualité, 
+    //mais qui aurait pu apporter de quoi créer de très bonnes solutions dans les générations suivantes.
+    // ici on classe la fonction de fitnesse par ordre decroissant et l'enfant est la sonnes des deux premier animaux ayant 
+    // la meilleur fonction de fitnesse.
+    function selectionOfAdult(oldPopulation, oldFitnesses, children) {
+
+        const fitnessesSort = oldFitnesses.slice().sort((a, b) => a - b).reverse();
+
+        const higherIndex = oldFitnesses.indexOf(fitnessesSort[0]);
+        const secondHigherIndex = oldFitnesses.indexOf(fitnessesSort[1]);
+
+        return children.concat([oldPopulation[secondHigherIndex], oldPopulation[higherIndex]]);
+    }
+
+
+   
+
+    runArtificialIntelligence({
         createPopulation: createPopulation,
-        fitness: fitnessFunction,
-        adultSelection: adultSelectionFunction,
-        parentSelection: parentSelectionFunction,
-        mutate: mutateFunction,
-        crossover: crossoverFunction
+        fitness: fitness,
+        adultSelection: selectionOfAdult,
+        parentSelection: selectionOfParent,
+        mutate: mutation,
+        crossover: crossover
     });
 
 
-    function gauss() {
-        return (Math.random() + Math.random() + Math.random()
-         + Math.random() + Math.random() + Math.random() - 3) / 3;
-    }
+ 
 }

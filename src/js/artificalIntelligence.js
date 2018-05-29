@@ -1,7 +1,7 @@
 let currentGeneration = 1;
 
 
-export function runEa({createPopulation, fitness, adultSelection, parentSelection, crossover, mutate}) {
+export function runArtificialIntelligence({createPopulation, fitness, adultSelection, parentSelection, crossover, mutate}) {
 
     currentGeneration = 1;
     
@@ -12,7 +12,11 @@ export function runEa({createPopulation, fitness, adultSelection, parentSelectio
 
         while(true) {
             const fitnesses = await fitness(population);
-            //console.log(fitnesses);
+
+            
+            
+            console.log(fitnesses);
+
             debugInfo(fitnesses);
 
             const parents = parentSelection(population, fitnesses);
