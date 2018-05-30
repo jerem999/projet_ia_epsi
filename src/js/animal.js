@@ -7,9 +7,6 @@ export default class animal {
 
     constructor(creatureType, movements, world, color, offset) {
 
-        
-        
-        
         const definition = defs[creatureType];
 
         this.color = color;
@@ -63,34 +60,9 @@ export default class animal {
             world.createJoint(joint);
             this.joints.push(joint);
             this.jointLengths.push(joint.getLength());
-            //this.movements.push(Math.random());
-            //this.movements.push(.05 + offset / 5);
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 
     update(time) {
         this.findMaxDst();

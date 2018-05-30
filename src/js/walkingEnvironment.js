@@ -50,8 +50,8 @@ function launchSimulation() {
         finishSimulation();
     } else {
         let timeout = 1000 * simulationFrequence;
-        if (simulationIterations > 15) {
-            timeout = 1; // to not have 1/60 timeout when trying to speed up very fast
+        if (simulationIterations > 15) {    // réinitialisation du timer toutes les 15 secondes
+            timeout = 1;
         }
 
         simulationTimeout = setTimeout(launchSimulation, timeout);
@@ -110,12 +110,6 @@ class generateEnvironement {
 
             const offsett = (i % soil) * soilDistance;
 
-            //console.log("je suis le offset");
-            //console.log(offsett);
-            
-            
-
-            
             return new animal(creatureType, p, this.world, getRandomColor(), offsett);
             
             
@@ -126,7 +120,6 @@ class generateEnvironement {
         this.timePassed = 0;
 
     }
-
 
     update() {
         this.timePassed += simulationFrequence;
@@ -145,7 +138,6 @@ class generateEnvironement {
 
     render() {
         const camera = this.camera;
-        //console.log(canvas.height / 20 + (camera.pos.y * camera.zoom))
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.fillText(this.timePassed.toFixed(1), 100, 10);
 
@@ -220,7 +212,6 @@ class generateEnvironement {
         context.lineTo(currMax, 17);
         context.stroke();
     }
-
 
     createGround() {
 

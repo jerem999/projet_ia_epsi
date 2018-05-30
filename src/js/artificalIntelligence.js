@@ -1,5 +1,7 @@
 let currentGeneration = 1;
 
+    // permet l'affichage de la génération en cours et le max atteint
+    // sur le dashboard sous la simualtion
 
 export function runArtificialIntelligence({createPopulation, fitness, adultSelection, parentSelection, crossover, mutate}) {
 
@@ -12,10 +14,6 @@ export function runArtificialIntelligence({createPopulation, fitness, adultSelec
 
         while(true) {
             const fitnesses = await fitness(population);
-
-            
-            
-            console.log(fitnesses);
 
             debugInfo(fitnesses);
 
@@ -58,7 +56,6 @@ function debugInfo(fitnesses) {
             max = f;
         }
     });
-
 
     document.getElementById("debugInfo").innerHTML = `<b>Generation: <b/>${currentGeneration}, <b>Best fitness: </b>${max.toFixed((2))}`;
 }

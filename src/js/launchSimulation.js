@@ -3,17 +3,12 @@ import trainingAnimal from './raiseAnimal';
 
 
 export function startSimulation() {
-    //endSimulation();
     const criteria = {
-        // mutationRate: parseFloat(document.getElementById('mutationslider').value),
-        // crossoverRate: parseFloat(document.getElementById('crossoverslider').value),
-        // creatureType: document.getElementById('figure').value,
-        // populationSize: document.getElementById('populationslider').value
 
-        mutationRate: 0.6,
-        crossoverRate: 0.5,
-        creatureType: document.getElementById('figure').value,
-        populationSize: 2
+        mutationRate: 0.6,  // taux de mutation => 60%
+        crossoverRate: 0.5, // taux de croisement => 50%
+        creatureType: document.getElementById('figure').value, // choix 4, 6 ou 8 pattes
+        populationSize: 20 // nombre d'individu
     };
 
 

@@ -40,8 +40,6 @@ export default function trainingAnimal(criteria) {
         return population;
     }
 
-
-
 /* *************** Etape 2 : évaluation des individus   ********* */  
 
 
@@ -61,9 +59,6 @@ export default function trainingAnimal(criteria) {
         
     }
 
-
-
-
     //sélection par tournoi 
     //Le principe de la sélection par tournoi augmente les chances pour les individus de piètre qualité de participer à l'amélioration de la population. 
     //Un tournoi consiste en une rencontre entre plusieurs individus pris au hasard dans la population. 
@@ -81,14 +76,9 @@ export default function trainingAnimal(criteria) {
             
             let indexB = Math.floor(Math.random() * population.length);
 
-            
-
             let f1 = allFitnesses[indexA];
             let f2 = allFitnesses[indexB];
 
-         
-
-           
             if (f1 >= f2) {
                 parents.push(population[indexA]);
             } else {
@@ -101,8 +91,6 @@ export default function trainingAnimal(criteria) {
 
        
     }
-
-
 
 /* *************** Etape 3 : création de nouveaux individus   ********* */  
 
@@ -130,7 +118,6 @@ export default function trainingAnimal(criteria) {
     }
 
 
-
     //On melange ADN de deux individux 
     //Les croisements permettent de simuler des reproductions d'individus dans le but d'en créer des nouveaux.
     // ici on fait des croisement aleatiore 
@@ -143,8 +130,6 @@ export default function trainingAnimal(criteria) {
         if (Math.random() < crossoverRate) {
             const crossoverPoint = Math.floor(Math.random() * parent1.length);
 
-           
-            
             for (let i = 0; i < crossoverPoint; i++) {
                 const value = parent1[i];
                 parent1[i] = parent2[i];
@@ -153,9 +138,7 @@ export default function trainingAnimal(criteria) {
         }
     }
 
-
 /* *************** Etape 4 :  L'insertion des nouveaux individus dans la population   ********* */  
-
 
     //Cette méthode de sélection permet de mettre en avant les meilleurs individus de la population.
     //Ce sont donc les individus les plus prometteurs qui vont participer à l'amélioration de notre population.
@@ -174,9 +157,6 @@ export default function trainingAnimal(criteria) {
         return children.concat([oldPopulation[secondHigherIndex], oldPopulation[higherIndex]]);
     }
 
-
-   
-
     runArtificialIntelligence({
         createPopulation: createPopulation,
         fitness: fitness,
@@ -186,6 +166,4 @@ export default function trainingAnimal(criteria) {
         crossover: crossover
     });
 
-
- 
 }

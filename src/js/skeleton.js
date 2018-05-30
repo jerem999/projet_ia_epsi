@@ -1,4 +1,5 @@
 const definitions = {
+    // architecture de l'individu à 4 pattes avec les points (points) et les liens entre chaque points (edges)
     FourFeet: {
         points: [
             [0, 0],
@@ -25,6 +26,7 @@ const definitions = {
             [3, 7]
         ]
     },
+    // architecture de l'individu à 8 pattes avec les points (points) et les liens entre chaque points (edges)
     EightFeet: {
         points: [
             [0, 0],
@@ -71,6 +73,7 @@ const definitions = {
             [11, 13]
         ]
     },
+    // architecture de l'individu à 6 pattes avec les points (points) et les liens entre chaque points (edges)
     SixFeet:  {
         points: [
             [0, 0],
